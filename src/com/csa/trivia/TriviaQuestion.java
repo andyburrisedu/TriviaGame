@@ -1,4 +1,5 @@
-//assume other class returns an arraylist of TriviaQuestion 
+package com.csa.trivia;
+//assume other class returns an arraylist of TriviaQuestion
 //git add file name
 //git commit -m "whatever happened"
 //git push origin master
