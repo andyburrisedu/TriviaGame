@@ -26,21 +26,12 @@ public class TriviaQuestion {
   // method check answer rturn boolean
   //two string method, list the question name and options
   
-  public static void answer (int ans){
-    if(ans == answer){
-      return true;
-    }else{
-     return false; 
-    } 
-}
-
-  public static void questionOptions (String [] args){
-    System.out.println(questions);
-    System.out.println("A) " + a);
-    System.out.println("B) " + b);
-    System.out.println("C) " + c);
-    System.out.println("D) " + d);
+  public boolean answer (int ans){
+    return ans == answer;
+  }
+  
+  @Override
+  public String toString (){
+    return questions + "\nA) " + a + "\nB) " + b + "\nC) " + c + "\nD) " + d;
   }
 }
-  
-  
