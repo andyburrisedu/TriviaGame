@@ -1,6 +1,6 @@
 //assume other class returns an arraylist of TriviaQuestion 
 //git add file name
-//got commit "whatever happened"
+//git commit -m "whatever happened"
 //git push origin master
 // to get what andy has done git pull origin master
 // to download again git clone and the url on cloner download in the page
@@ -24,6 +24,8 @@ public class TriviaQuestion {
     this.d = d;
     this.answer = answer;
   }
+  // method check answer rturn boolean
+  //two string method, list the question name and options
   
   public static void Answer (int answer){
     
