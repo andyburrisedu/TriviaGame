@@ -26,7 +26,7 @@ public class Game {
         while (!anyWrong){
             TriviaQuestion question = getNextQuestion();
             askedQuestionCount++;
-            System.out.println(question.questionFormat());
+            System.out.println(question.questionAndAnswerChoices());
 
             boolean correct = question.checkAnswer(getNextValidAnswer());
             if (correct){
