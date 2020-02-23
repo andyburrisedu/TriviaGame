@@ -10,15 +10,19 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public class TriviaQuestionParser {
-    private File inputFile = new File("src/com/csa/trivia/data/test.json");
+    private File inputFile;
 
-    public void parse() {
+    public TriviaQuestionParser(String filePath){
+        inputFile = new File(filePath);
+    }
+
+    public ArrayList<TriviaQuestion> parse() {
         try{
             String input = scan();
-            ArrayList<TriviaQuestion> allQuestions = parseInput(input);
-            System.out.println(allQuestions);
+            return parseInput(input);
         }catch (Exception e){
             e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 
@@ -58,14 +62,13 @@ public class TriviaQuestionParser {
         StringSubsectionParser subsectionParser = new StringSubsectionParser(input);
         while (subsectionParser.hasSubsection("{", "}")){
             TriviaQuestion tq = parseSingleQuestion(subsectionParser);
-            System.out.println(tq);
             outList.add(tq);
         }
         return outList;
     }
 
     public static void main(String[] args) {
-        TriviaQuestionParser parser = new TriviaQuestionParser();
-        parser.parse();
+        TriviaQuestionParser parser = new TriviaQuestionParser("src/com/csa/trivia/data/questions.json");
+        System.out.println(parser.parse());
     }
 }
