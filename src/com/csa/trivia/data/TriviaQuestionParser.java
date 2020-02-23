@@ -9,13 +9,24 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
+/**
+ * Class to parse .json files that contain the trivia questions into usable {@link TriviaQuestion} objects
+ */
 public class TriviaQuestionParser {
     private File inputFile;
 
+    /**
+     * Creates a new TriviaQuestionParser
+     * @param filePath path from root directory of project to the .json file to parse
+     */
     public TriviaQuestionParser(String filePath){
         inputFile = new File(filePath);
     }
 
+    /**
+     * Parses .json file given in constructor
+     * @return List of trivia questions
+     */
     public ArrayList<TriviaQuestion> parse() {
         try{
             String input = scan();
@@ -25,6 +36,7 @@ public class TriviaQuestionParser {
             return new ArrayList<>();
         }
     }
+
 
     private String scan() throws FileNotFoundException {
         BufferedReader br = new BufferedReader(new FileReader(inputFile));
@@ -65,10 +77,5 @@ public class TriviaQuestionParser {
             outList.add(tq);
         }
         return outList;
-    }
-
-    public static void main(String[] args) {
-        TriviaQuestionParser parser = new TriviaQuestionParser("src/com/csa/trivia/data/questions.json");
-        System.out.println(parser.parse());
     }
 }

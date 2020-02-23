@@ -16,11 +16,17 @@ public class Game {
     private int askedQuestionCount = 0;
     private boolean anyWrong = false;
 
+    /**
+     * Creates a new game with all of the trivia questions available
+     */
     public Game(){
         TriviaQuestionParser parser = new TriviaQuestionParser("src/com/csa/trivia/data/questions.json");
         questions = parser.parse();
     }
 
+    /**
+     * Begins the game -- requires user input so suspends code
+     */
     public void play() {
         System.out.println("Welcome to TriviaGame!\n");
         while (!anyWrong){
@@ -38,8 +44,11 @@ public class Game {
         }
     }
 
+    /**
+     * Gets a random question and removes it from the options
+     */
     private TriviaQuestion getNextQuestion() {
-        int index = (int) (Math.random() * questions.size());
+        int index = Utils.random(questions.size());
         return questions.remove(index);
     }
 
