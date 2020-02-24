@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Class that contains game logic and state
+ */
 public class Game {
     private static List<String> POSSIBLE_ANSWERS = Arrays.asList("a", "b", "c", "d");
 
@@ -17,9 +20,9 @@ public class Game {
     private boolean anyWrong = false;
 
     /**
-     * Creates a new game with all of the trivia questions available
+     * Creates a new game and initializes the trivia questions with values loaded from questions.json
      */
-    public Game(){
+    public Game() {
         TriviaQuestionParser parser = new TriviaQuestionParser("src/com/csa/trivia/data/questions.json");
         questions = parser.parse();
     }
@@ -29,15 +32,15 @@ public class Game {
      */
     public void play() {
         System.out.println("Welcome to TriviaGame!\n");
-        while (!anyWrong){
+        while (!anyWrong) {
             TriviaQuestion question = getNextQuestion();
             askedQuestionCount++;
             System.out.println(question.questionAndAnswerChoices());
 
             boolean correct = question.checkAnswer(getNextValidAnswer());
-            if (correct){
+            if (correct) {
                 System.out.println("That's correct! Time for the next question.");
-            }else {
+            } else {
                 printIncorrect(question, askedQuestionCount - 1);
             }
             anyWrong = !correct;
@@ -52,16 +55,24 @@ public class Game {
         return questions.remove(index);
     }
 
-    private String getNextValidAnswer(){
+    /**
+     * Gets next answer of A, B, C, or D (case insensitive) that user inputs, reprompting them if they input an unexpected value
+     */
+    private String getNextValidAnswer() {
         String userAnswer = scanner.nextLine().toLowerCase();
-        while (!POSSIBLE_ANSWERS.contains(userAnswer)){
+        while (!POSSIBLE_ANSWERS.contains(userAnswer)) {
             System.out.println(userAnswer + " is invalid -- please answer A, B, C, or D");
             userAnswer = scanner.nextLine().toLowerCase();
         }
         return userAnswer;
     }
 
-    private void printIncorrect(TriviaQuestion question, int finalScore){
+    /**
+     * Prints output for when player gets a question incorrect, including the correct answer
+     * @param question the question the user got wrong
+     * @param finalScore the total score to display
+     */
+    private void printIncorrect(TriviaQuestion question, int finalScore) {
         System.out.println("That's incorrect!");
         System.out.println("The right answer was " + question.formattedAnswer() + "\n");
         System.out.println("GAME OVER");

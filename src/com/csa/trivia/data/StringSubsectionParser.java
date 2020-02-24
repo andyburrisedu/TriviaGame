@@ -2,6 +2,7 @@ package com.csa.trivia.data;
 
 /**
  * Class to progressively find subsections in a String - once a subsection is found it is ignored in the future.
+ * @author Andy
  */
 public class StringSubsectionParser {
     private String overall;

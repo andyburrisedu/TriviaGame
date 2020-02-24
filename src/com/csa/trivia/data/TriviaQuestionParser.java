@@ -11,20 +11,21 @@ import java.util.stream.Collectors;
 
 /**
  * Class to parse .json files that contain the trivia questions into usable {@link TriviaQuestion} objects
+ * @author Andy
  */
 public class TriviaQuestionParser {
     private File inputFile;
 
     /**
      * Creates a new TriviaQuestionParser
-     * @param filePath path from root directory of project to the .json file to parse
+     * @param filePath path from root directory of project to the file to parse. Must be a .json file with pretty-print formatting and lines ordered "question", "A", "B", "C", "D", "answer"
      */
     public TriviaQuestionParser(String filePath){
         inputFile = new File(filePath);
     }
 
     /**
-     * Parses .json file given in constructor
+     * Parses {@link TriviaQuestionParser#inputFile}. Must be a .json file with pretty-print formatting and lines ordered "question", "A", "B", "C", "D", "answer"
      * @return List of trivia questions
      */
     public ArrayList<TriviaQuestion> parse() {
@@ -37,7 +38,11 @@ public class TriviaQuestionParser {
         }
     }
 
-
+    /**
+     * Reads {@link TriviaQuestionParser#inputFile} to a String
+     * @return the entire text of the .json file in {@link TriviaQuestionParser#inputFile}
+     * @throws FileNotFoundException if path of {@link TriviaQuestionParser#inputFile} is invalid
+     */
     private String scan() throws FileNotFoundException {
         BufferedReader br = new BufferedReader(new FileReader(inputFile));
         Scanner scanner = new Scanner(inputFile);
@@ -45,6 +50,25 @@ public class TriviaQuestionParser {
         return br.lines().collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Parses JSON input into a list of TriviaQuestions
+     * @param input JSON data, should be from {@link TriviaQuestionParser#inputFile}
+     */
+    private ArrayList<TriviaQuestion> parseInput(String input){
+        ArrayList<TriviaQuestion> outList = new ArrayList<TriviaQuestion>();
+        StringSubsectionParser subsectionParser = new StringSubsectionParser(input);
+        while (subsectionParser.hasSubsection("{", "}")){
+            TriviaQuestion tq = parseSingleQuestion(subsectionParser);
+            outList.add(tq);
+        }
+        return outList;
+    }
+
+    /**
+     * Parses the next question in the file
+     * @param subsectionParser the {@link StringSubsectionParser} containing the remainder of the .json file to be parsed
+     * @return TriviaQuestion from the next .json object
+     */
     private TriviaQuestion parseSingleQuestion(StringSubsectionParser subsectionParser){
         String question = parseLine(subsectionParser);
         String a = parseLine(subsectionParser);
@@ -63,19 +87,14 @@ public class TriviaQuestionParser {
         return new TriviaQuestion(question, a, b, c, d, answer);
     }
 
+    /**
+     * Parses a single line of JSON text, returning only the value
+     * @param sp the {@link StringSubsectionParser} holding the JSON data
+     * @return the value of the first key-value pair in sp
+     */
     private String parseLine(StringSubsectionParser sp){
         sp.skipPastNext("\": ");
         String section = sp.nextSubsection("\"", "\"");
         return section.substring(1, section.length() -1);
-    }
-
-    private ArrayList<TriviaQuestion> parseInput(String input){
-        ArrayList<TriviaQuestion> outList = new ArrayList<TriviaQuestion>();
-        StringSubsectionParser subsectionParser = new StringSubsectionParser(input);
-        while (subsectionParser.hasSubsection("{", "}")){
-            TriviaQuestion tq = parseSingleQuestion(subsectionParser);
-            outList.add(tq);
-        }
-        return outList;
     }
 }

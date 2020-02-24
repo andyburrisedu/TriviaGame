@@ -8,6 +8,7 @@ package com.csa.trivia;
 
 /**
  * Class representing a trivia question, its answer choices, and its correct answer
+ * @author Enzo
  */
 public class TriviaQuestion {
 

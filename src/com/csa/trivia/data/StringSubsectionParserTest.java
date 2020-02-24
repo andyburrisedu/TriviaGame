@@ -6,7 +6,6 @@ import com.csa.trivia.Utils;
  * Test for {@link StringSubsectionParser}
  */
 public class StringSubsectionParserTest {
-
     public static void main(String[] args) {
         StringSubsectionParser sp = new StringSubsectionParser("abc dklfjdsc abcabc hsfjlafd abcddfjsakfjsd");
         Utils.assertEquals(sp.hasSubsection("abc", "abc"), true);
